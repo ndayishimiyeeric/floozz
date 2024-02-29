@@ -86,9 +86,9 @@ public class Consumer extends Agent {
         send(bookingRequest);
     }
 
-    private double utilityForOffer(String time, double price, String typeOfEnergy){
+    private double utilityForOffer(String time, double price, String typeOfEnergy) {
         double utilityScore = 0.0;
-        if (this.preferredEnergyType.equals(typeOfEnergy)){
+        if (this.preferredEnergyType.equals(typeOfEnergy)) {
             utilityScore += 50;
         }
         utilityScore -= Math.abs(this.budget - price);

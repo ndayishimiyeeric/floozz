@@ -1,4 +1,4 @@
-package Agents;
+package Ontology;
 
 /**
  * @author LIN Tianyuan

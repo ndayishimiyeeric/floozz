@@ -11,7 +11,6 @@ public class NetworkManager extends Agent {
 
     public NetworkManager(MailBox mailBox) {
         this.mailBox = new MailBox(this.getAID());
-
     }
 
     public void receiveMessage(String content, AID senderId) {

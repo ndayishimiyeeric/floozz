@@ -4,22 +4,38 @@ import jade.core.Agent;
 
 public class Producer extends Agent {
     private String typeOfEnergy;
-    private int price;
-    private int quantity;
     private price_table_of_day;
+    private List<Booking> bookings;
+    private List<Offering> offerings;
 
-    public Producer(String typeOfEnergy, int price, int quantity) {
+    public Producer(String typeOfEnergy) {
         this.typeOfEnergy = typeOfEnergy;
-        this.price = price;
-        this.quantity = quantity;
+        this.offerings = new ArrayList<Offering>();
+        this.bookings = new ArrayList<Booking>();
+    }
+
+    protected void setup() {
+        addBehaviour(new TickerBehaviour(this, 86400000) {
+            @Override
+            protected void onTick() {
+                generateDailyEnergyOffering();
+                clearDailyBookings();
+                NTH_DAY++;
+            }
+        });
     }
 
     public String getTypeOfEnergy() {
         return typeOfEnergy;
     }
 
-    public String respondToRequest(marketAgent, time, amount, price) {
+    public String respondToRequest(String marketAgent, int time, int amount, double price) {
         return null;
+    }
+
+    public void generateDailyEnergyOffering() {
+
+
     }
 
 }
