@@ -6,9 +6,19 @@ import jade.core.Agent;
 
 
 public class NetworkManager extends Agent {
-<<<<<<< HEAD
+
+    private final MailBox mailBox;
+
+    public NetworkManager(MailBox mailBox) {
+        this.mailBox = new MailBox(this.getAID());
+
+    }
+
+    public void receiveMessage(String content, AID senderId) {
+        mailBox.receiveMessage(content, senderId);
+    }
+
     protected void setup() {
-        // Register the book-selling service in the yellow pages
         DFAgentDescription dfd = new DFAgentDescription();
         dfd.setName(getAID());
         ServiceDescription sd = new ServiceDescription();
@@ -20,17 +30,5 @@ public class NetworkManager extends Agent {
         } catch (FIPAException fe) {
             fe.printStackTrace();
         }
-
-//        // Add the behaviour serving queries from buyer agents
-//        addBehaviour(new OfferRequestsServer());
-
-    private final MailBox mailBox;
-
-    public NetworkManager(MailBox mailBox) {
-        this.mailBox = new MailBox(this.getAID());
-    }
-
-    public void receiveMessage(String content, AID senderId) {
-        mailBox.receiveMessage(content, senderId);
     }
 }
