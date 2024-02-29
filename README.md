@@ -1,4 +1,4 @@
-# floozz: 
+# floozz
 ##   facilating energy contract flows between producers and consumers
 
 Here we simulate a simple environment where **Consumers**, **Producers**, communicate daily through a 
