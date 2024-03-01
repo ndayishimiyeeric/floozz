@@ -63,7 +63,7 @@ public class Consumer extends Agent {
         flexibleNeeds.clear();
         int numberOfNeeds = random.nextInt(5) + 1;
 
-        for(int i = 0; i < numberOfNeeds; i++){
+        for(int i = 0; i < numberOfNeeds; i++) {
             String time = generateRandomTime();
             double amount = 1 + (10 - 1) * random.nextDouble();
             flexibleNeeds.add(new EnergyNeed(time, amount));
