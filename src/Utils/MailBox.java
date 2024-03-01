@@ -10,7 +10,7 @@ public class MailBox {
     private final AID ownerId;
 
     public MailBox (AID ownerId) {
-        this.ownerId = ownerId;
+        this.ownerId   = ownerId;
         this.messages = new LinkedList<>();
     }
 

@@ -8,7 +8,7 @@ public class Message {
 
     public Message(String content, AID senderId, AID receiverId) {
         this.content = content;
-        this.senderId = senderId;
+        this.senderId =  senderId;
         this.receiverId = receiverId;
     }
 
