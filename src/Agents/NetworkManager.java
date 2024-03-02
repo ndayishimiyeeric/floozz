@@ -1,7 +1,7 @@
 package Agents;
 
+import Behaviors.ReceiveMessage;
 import Utils.MailBox;
-import jade.core.AID;
 import jade.core.Agent;
 
 
@@ -9,25 +9,16 @@ public class NetworkManager extends Agent {
 
     private final MailBox mailBox;
 
-    public NetworkManager(MailBox mailBox) {
+    public NetworkManager() {
         this.mailBox = new MailBox(this.getAID());
     }
 
-    public void receiveMessage(String content, AID senderId) {
-        mailBox.receiveMessage(content, senderId);
+    public MailBox getMailBox() {
+        return mailBox;
     }
 
     protected void setup() {
-        DFAgentDescription dfd = new DFAgentDescription();
-        dfd.setName(getAID());
-        ServiceDescription sd = new ServiceDescription();
-        sd.setType("market-agent");
-        sd.setName("market-agent");
-        dfd.addServices(sd);
-        try {
-            DFService.register(this, dfd);
-        } catch (FIPAException fe) {
-            fe.printStackTrace();
-        }
+        System.out.println("Hello! Network Manager "+ getAID().getName()+ " is ready.");
+        addBehaviour(new ReceiveMessage(this));
     }
 }
