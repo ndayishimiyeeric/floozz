@@ -22,7 +22,7 @@ public class Launcher {
             // Create NetworkManager agent
             AgentController agentController = mainContainer.createNewAgent("NetworkManager", "Agents.NetworkManager", null);
             agentController.start();
-
+            mainContainer.createNewAgent("SenderAgent", "Agents.SenderAgent", null).start();
         } catch (StaleProxyException e) {
             e.printStackTrace();
         }
