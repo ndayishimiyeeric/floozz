@@ -1,12 +1,13 @@
 package Utils;
 
 import jade.core.AID;
+import jade.lang.acl.ACLMessage;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class MailBox {
-    public Queue<Message> messages;
+    public Queue<ACLMessage> messages;
     private final AID ownerId;
 
     public MailBox (AID ownerId) {
@@ -15,7 +16,7 @@ public class MailBox {
     }
 
 
-    public Message readMessage() {
+    public ACLMessage readMessage() {
         return messages.peek();
     }
 
@@ -25,8 +26,7 @@ public class MailBox {
     }
 
 
-    public void receiveMessage(String content, AID senderId) {
-        Message message = new Message(content, senderId, ownerId);
+    public void receiveMessage(ACLMessage message) {
         messages.offer(message);
     }
 }

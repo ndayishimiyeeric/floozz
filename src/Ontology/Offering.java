@@ -1,11 +1,11 @@
 package Ontology;
 
 public class Offering {
-    private String typeOfEnergy;
-    private int quantity;
-    private double price;
-    private int startTime;
-    private int endTime;
+    private final String typeOfEnergy;
+    private final int quantity;
+    private final double price;
+    private final int startTime;
+    private final int endTime;
 
     public Offering(String typeOfEnergy, int quantity, double price, int startTime, int endTime) {
         this.typeOfEnergy = typeOfEnergy;
@@ -21,5 +21,9 @@ public class Offering {
     public String toString() {
         return "Offering [typeOfEnergy=" + typeOfEnergy + ", quantity=" + quantity + ", price=" + price +
                 ", startTime=" + startTime + ", endTime=" + endTime + "]";
+    }
+
+    public boolean matchesCriteria(int time, int amount, double price) {
+        return false; // Eric: I added the return to fix compile errors you can continue your impl
     }
 }
