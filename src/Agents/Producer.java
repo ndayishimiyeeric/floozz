@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class Producer extends Agent {
     private final String typeOfEnergy;
-    private final Map<Integer, Double> price_table_of_day; // Use a Map for hourly pricing
+    private final double price_table_of_day; // Use a Map for hourly pricing
     private final List<Booking> bookings;
     private final List<Offering> offerings;
 
@@ -20,7 +20,11 @@ public class Producer extends Agent {
         this.typeOfEnergy = typeOfEnergy;
         this.offerings = new ArrayList<Offering>();
         this.bookings = new ArrayList<Booking>();
-        this.price_table_of_day = new HashMap<>(); // Initialize empty price table
+        this.price_table_of_day = this.getGeneratePriceForToday();
+    }
+
+    public double getGeneratePriceForToday() {
+        return 0.0;
     }
 
     protected void setup() {
