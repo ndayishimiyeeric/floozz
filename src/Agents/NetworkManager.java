@@ -1,5 +1,6 @@
 package Agents;
 
+import Behaviors.HandleEnergyRequest;
 import Behaviors.HandleRegistrationService;
 import Behaviors.ReceiveMessage;
 import Utils.EnergyTable;
@@ -45,7 +46,8 @@ public class NetworkManager extends Agent {
 
     protected void setup() {
         System.out.println("Hello! Network Manager "+ getAID().getName()+ " is ready.");
-        addBehaviour(new ReceiveMessage(this));
+        addBehaviour(new ReceiveMessage(this)); // March 2 23 // 00:00 latest
         addBehaviour(new HandleRegistrationService(this));
+        addBehaviour(new HandleEnergyRequest(this));
     }
 }
