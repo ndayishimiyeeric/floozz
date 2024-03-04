@@ -22,22 +22,31 @@ public class ReceiveMessage extends CyclicBehaviour {
 
     @Override
     public void action() {
-        MessageTemplate messageTemplate = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
+        MessageTemplate messageTemplate = MessageTemplate.or(
+                MessageTemplate.MatchPerformative(ACLMessage.INFORM),
+                MessageTemplate.MatchPerformative(ACLMessage.REQUEST)
+        );
+
         ACLMessage message = myAgent.receive(messageTemplate);
         if (message != null) {
             // message processing
             String content = message.getContent();
             System.out.println(myAgent.getAID().getName() + "Received message: " + content + " Ontology is " + message.getOntology());
-            if (message.getOntology().equals("TimerTimeOfDay")) {
-                mailBox.receiveMessage(message);
-            } else if (message.getOntology().equals("EnergyServiceRegistration")) {
-                registrationMailBox.receiveMessage(message);
-            } else if (message.getOntology().equals("EnergyServiceBooking")) {
-                bookingsMailBox.receiveMessage(message);
-            } else if (message.getOntology().equals("EnergyServiceRequest")) {
-                requestsMailBox.receiveMessage(message);
+            // Route the message based on its ontology
+            switch (message.getOntology()) {
+                case "TimerTimeOfDay":
+                    mailBox.receiveMessage(message);
+                    break;
+                case "EnergyServiceRegistration":
+                    registrationMailBox.receiveMessage(message);
+                    break;
+                case "EnergyServiceBooking":
+                    bookingsMailBox.receiveMessage(message);
+                    break;
+                case "EnergyServiceRequest":
+                    requestsMailBox.receiveMessage(message);
+                    break;
             }
-
         } else {
             block();
         }
