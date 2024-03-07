@@ -1,8 +1,16 @@
 package Agents;
 
+import Behaviors.EnergyRequest;
+import Behaviors.HandleBooking;
+import Behaviors.ReceiveMessageForConsumer;
+import Behaviors.ReceiveTempMessage;
 import Ontology.EnergyNeed;
+import Utils.Energy;
+import Utils.EnergyDeserialization;
+import Utils.MailBox;
 import jade.core.AID;
 import jade.core.Agent;
+import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -16,8 +24,19 @@ public class Consumer extends Agent {
     private int NTH_DAY = 1;
     private List<EnergyNeed> persistentNeeds;
     private List<EnergyNeed> flexibleNeeds;
-    private String preferredEnergyType;
-    private double budget;
+    private int preferredEnergyType = 1;
+    private double budget = 20;
+
+    private final MailBox mailBox;
+    private final MailBox bookingBox;
+    private final MailBox requestEnergyBox;
+
+    public Consumer(){
+        this.mailBox = new MailBox(this.getAID());
+        this.bookingBox = new MailBox(this.getAID());
+        this.requestEnergyBox = new MailBox(this.getAID());
+    }
+
 
     protected void setup() {
         addBehaviour(new TickerBehaviour(this, 86400000) {
@@ -29,31 +48,48 @@ public class Consumer extends Agent {
             }
         });
 
-        // respondToBookingOffer
-        addBehaviour(new CyclicBehaviour(this) {
-            @Override
-            public void action() {
-                ACLMessage offerMsg = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.PROPOSE));
-                if (offerMsg != null) {
-                    String content = offerMsg.getContent();
-                    boolean acceptOffer = evaluateOffer(content);
-                    ACLMessage reply = offerMsg.createReply();
 
-                    if (acceptOffer){
-                        reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
-                        reply.setContent("Accepted");
-                    } else {
-                        reply.setPerformative(ACLMessage.REJECT_PROPOSAL);
-                        reply.setContent("Rejected");
-                    }
-                    send(reply);
-                } else {
-                    block();
-                }
-            }
-        });
+        addBehaviour(new EnergyRequest(this));
+        addBehaviour(new ReceiveMessageForConsumer(this));
+        addBehaviour(new HandleBooking(this));
+        // respondToBookingOffer
+//        addBehaviour(new CyclicBehaviour(this) {
+//            @Override
+//            public void action() {
+//                ACLMessage offerMsg = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.PROPOSE));
+//                if (offerMsg != null) {
+//                    String content = offerMsg.getContent();
+//                    System.out.println(content);
+//                    boolean acceptOffer = evaluateOffer(content);
+//                    ACLMessage reply = offerMsg.createReply();
+//
+//                    if (acceptOffer){
+//                        reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
+//                        reply.setContent("Accepted");
+//                    } else {
+//                        reply.setPerformative(ACLMessage.REJECT_PROPOSAL);
+//                        reply.setContent("Rejected");
+//                    }
+//                    send(reply);
+//                } else {
+//                    block();
+//                }
+//            }
+//        });
+
     }
 
+    public MailBox getMailBox() {
+        return this.mailBox;
+    }
+
+    public MailBox getBookingBox() {
+        return this.bookingBox;
+    }
+
+    public MailBox getRequestEnergyBox() {
+        return this.requestEnergyBox;
+    }
     private void generateDailyBudget() {
         Random random = new Random();
         budget = 50 + (200 - 50) * random.nextDouble();
@@ -87,9 +123,12 @@ public class Consumer extends Agent {
         send(bookingRequest);
     }
 
-    private double utilityForOffer(String time, double price, String typeOfEnergy) {
+    public int getPreferredEnergyType(){
+        return this.preferredEnergyType;
+    }
+    public double utilityForOffer(int type, double price, double quantity) {
         double utilityScore = 0.0;
-        if (this.preferredEnergyType.equals(typeOfEnergy)) {
+        if (this.preferredEnergyType == type) {
             utilityScore += 50;
         }
         utilityScore -= Math.abs(this.budget - price);
@@ -97,19 +136,22 @@ public class Consumer extends Agent {
         return utilityScore;
     }
 
-    private boolean evaluateOffer(String content) {
-        String[] parts = content.split(",");
-        String time = parts[0];
-        double amount = Double.parseDouble(parts[1]);
-        String typeOfEnergy = parts[2];
-        double price = Double.parseDouble(parts[3]);
+    public boolean evaluateOffer(String content) {
+        Energy energy = EnergyDeserialization.deserializeFromJson(content);
+        int type = energy.getType();
+        double price = energy.getPrice();
+        double quantity = energy.getQuantity();
 
-        double utility = utilityForOffer(time, price, typeOfEnergy);
+        double utility = utilityForOffer(type, price, quantity);
 
         boolean isWithinBudget = price <= budget;
         boolean hasHighUtility = utility > 50;
 
         return isWithinBudget && hasHighUtility;
+    }
+
+    public boolean hasBudget(){
+        return this.budget > 0;
     }
 
 }
