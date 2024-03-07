@@ -16,6 +16,8 @@ public class EnergyDeserialization {
     public static Map<AID, Energy> deserializeMapEnergyFromJson(String jsonString) {
         Gson gson = new Gson();
         Type type = new TypeToken<Map<AID, Energy>>(){}.getType();
+        System.out.println("jasontring " + jsonString);
+
         return gson.fromJson(jsonString, type);
     }
 }
