@@ -31,7 +31,7 @@ public class Launcher {
 //        }
 
         try {
-            // Start NetworkManager agent
+            //  Start NetworkManager agent
             AgentController networkManager = mainContainer.createNewAgent("NetworkManager", "Agents.NetworkManager", null);
             networkManager.start();
             AgentController weatherAgent = mainContainer.createNewAgent("Weather", "Agents.Weather", null);

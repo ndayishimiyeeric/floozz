@@ -9,7 +9,7 @@ import Behaviors.RegisterWithManager;
 
 public class Producer extends Agent {
 
-    private int energyType; // 0: "fossil", 1: "solar", 2: "wind"
+    private int energyType; // 0: "fossil",  1: "solar",  2: "wind"
     private float energyPrice;
     private int energyProductionCapacity;
     private final MailBox mailBox;

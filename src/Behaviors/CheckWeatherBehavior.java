@@ -14,7 +14,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 public class CheckWeatherBehavior extends TickerBehaviour {
 
-    // the weather agent
+    //  the weather agent
     private AID weatherAgentAID;
 
     public CheckWeatherBehavior(Agent agent, int period) {
