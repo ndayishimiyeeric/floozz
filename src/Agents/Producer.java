@@ -5,7 +5,6 @@ import Behaviors.GenerateDailyEnergyOffering;
 import Behaviors.RespondToRequestBehavior;
 import Utils.MailBox;
 import jade.core.Agent;
-import java.util.Random;
 import Behaviors.RegisterWithManager;
 
 public class Producer extends Agent {

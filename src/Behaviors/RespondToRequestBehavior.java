@@ -37,7 +37,7 @@ public class RespondToRequestBehavior extends CyclicBehaviour {
                     requestsMailBox.messages.poll();
                     break;
                 case ACLMessage.INFORM:
-                    if (content.isEmpty()) {
+                    if (content.isEmpty())  {
                         // TODO
                         return;
                     }

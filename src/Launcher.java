@@ -46,7 +46,7 @@ public class Launcher {
                 AgentController producer = mainContainer.createNewAgent("Producer"+i, "Agents.Producer", new Object[]{energyType, energyProductionCapacity, energyPrice});
                  producer.start();
             }
-            // Generating the consumers
+            // Generating the  consumers
             int numConsumers = 1+random.nextInt(999);
             for (int i = 0; i < numProducers; i++) {
                 AgentController consumer = mainContainer.createNewAgent("Consumer"+i, "Agents.Consumer", null);
