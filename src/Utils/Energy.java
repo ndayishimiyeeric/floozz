@@ -55,4 +55,9 @@ public class Energy {
     public void setPeriod(String period) {
         this.period = period;
     }
+
+    public String toString() {
+        String type = new String[]{"fossil", "solar", "wind"}[this.type];
+        return this.quantity + " Joules of " + type + " energy priced at " + this.price + " euros per Joule";
+    }
 }

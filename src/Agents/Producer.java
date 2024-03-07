@@ -1,83 +1,79 @@
 package Agents;
 
-import Ontology.Booking;
-import Ontology.Offering;
+import Behaviors.CheckWeatherBehavior;
+import Behaviors.GenerateDailyEnergyOffering;
+import Behaviors.RespondToRequestBehavior;
+import Utils.MailBox;
 import jade.core.Agent;
-import jade.core.behaviours.TickerBehaviour;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import Behaviors.RegisterWithManager;
 
 public class Producer extends Agent {
-    private final String typeOfEnergy;
-    private final Map<Integer, Double> price_table_of_day; // Use a Map for hourly pricing
-    private final List<Booking> bookings;
-    private final List<Offering> offerings;
 
-    public Producer(String typeOfEnergy) {
-        this.typeOfEnergy = typeOfEnergy;
-        this.offerings = new ArrayList<Offering>();
-        this.bookings = new ArrayList<Booking>();
-        this.price_table_of_day = new HashMap<>(); // Initialize empty price table
+    private int energyType; // 0: "fossil",  1: "solar",  2: "wind"
+    private float energyPrice;
+    private int energyProductionCapacity;
+    private final MailBox mailBox;
+    private int[] weatherParams;
+
+    public Producer() {
+        this.mailBox = new MailBox(this.getAID());
     }
 
     protected void setup() {
-        addBehaviour(new TickerBehaviour(this, 86400000) {
-            @Override
-            protected void onTick() {
-                // Generate new offerings for each hour
-                offerings.clear();
-                for (int hour = 0; hour < 24; hour++) {
-                    // Use default 0 for missing hours
-                    double price = price_table_of_day.getOrDefault(hour, 0.0);
-                    // Example offering with 100 units
-                    offerings.add(new Offering(typeOfEnergy, 100, price, hour, hour + 1));
-                }
-                clearDailyBookings();
-//                NTH_DAY++;
-            }
-        });
-    }
-
-    public String getTypeOfEnergy() {
-        return typeOfEnergy;
-    }
-
-    public String respondToRequest(String marketAgent, int time, int amount, double price) {
-        // Example implementation, customize as needed
-        for (Offering offering : offerings) {
-            if (offering.matchesCriteria(time, amount, price)) {
-                // Assuming Booking class exists, and it includes details like the marketAgent, time, amount, etc.
-//                bookings.add(new Booking(marketAgent, time, amount, price));
-                return "Accepted";
-            }
+        // Initialization of energy type
+        Object[] args = getArguments();
+        if (args != null && args.length > 0) {
+            energyType = Integer.parseInt(""+args[0]);
+            energyProductionCapacity = Integer.parseInt(""+args[1]);
+            energyPrice = Integer.parseInt(""+args[2]);
         }
-        return "Rejected";
-    }
-
-    private void clearDailyBookings() {
-        // Remove bookings from previous day
-        bookings.clear();
-    }
-
-    public void generateDailyEnergyOffering() {
-        // 1. Clear previous offerings:
-        offerings.clear();
-        // 2. Loop through each hour of the day:
-        for (int hour = 0; hour < 24; hour++) {
-            // 3. Retrieve the price for this hour:
-            double price = price_table_of_day.getOrDefault(hour, 0.0);
-
-            // 4. Create an Offering object with relevant details:
-            offerings.add(new Offering(typeOfEnergy,
-                    // Adjust quantity based on your scenario,
-                    100,
-                    price,
-                    hour,
-                    hour + 1));
+        addBehaviour(new RegisterWithManager(this, Weather.ABSTRACT_DAY_LENGTH));
+        addBehaviour(new GenerateDailyEnergyOffering(this, Weather.ABSTRACT_DAY_LENGTH));
+        addBehaviour(new RespondToRequestBehavior(this));
+        // If renewable energy, then we check weather regularly
+        if (this.energyType != 0) {
+            addBehaviour(new CheckWeatherBehavior(this, Weather.ABSTRACT_DAY_LENGTH));
         }
     }
 
+    public MailBox getRequestsMailBox() {
+        return this.mailBox;
+    }
+
+    public int getEnergyType() {
+        return energyType;
+    }
+
+    public float getEnergyPrice() {
+        return energyPrice;
+    }
+
+    public int getEnergyProduction() {
+        if(this.weatherParams == null) {
+            return energyProductionCapacity*80;
+        }
+        int intensity = 0;
+        if (energyType == 1) {
+            intensity = this.weatherParams[0];
+        } else {
+            intensity = this.weatherParams[1];
+        }
+        return energyProductionCapacity * intensity;
+    }
+
+    public int[] getWeatherParams() {
+        if (this.weatherParams == null) {
+            return new int[]{-1, -1};
+        }
+        return weatherParams;
+    }
+
+    public void setWeatherParams(int[] weatherParams) {
+        this.weatherParams = weatherParams;
+    }
+
+    protected void takeDown() {
+        // Agent cleanup
+        System.out.println("EnergyProducerAgent " + getAID().getName() + " terminating.");
+    }
 }

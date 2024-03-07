@@ -6,6 +6,13 @@ import Behaviors.ReceiveMessage;
 import Utils.EnergyTable;
 import Utils.MailBox;
 import jade.core.Agent;
+import jade.core.AID;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
+
+import java.util.List;
 
 
 public class NetworkManager extends Agent {
@@ -50,4 +57,5 @@ public class NetworkManager extends Agent {
         addBehaviour(new HandleRegistrationService(this));
         addBehaviour(new HandleEnergyRequest(this));
     }
+
 }
