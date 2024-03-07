@@ -13,7 +13,6 @@ public class Producer extends Agent {
     private float energyPrice;
     private int energyProductionCapacity;
     private final MailBox mailBox;
-
     private int[] weatherParams;
 
     public Producer() {
@@ -60,6 +59,10 @@ public class Producer extends Agent {
             intensity = this.weatherParams[1];
         }
         return energyProductionCapacity * intensity;
+    }
+
+    public int[] getWeatherParams() {
+        return weatherParams;
     }
 
     public void setWeatherParams(int[] weatherParams) {
