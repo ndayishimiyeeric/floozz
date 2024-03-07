@@ -26,6 +26,7 @@ public class RegisterWithManager extends TickerBehaviour {
         Producer producer = (Producer) this.myAgent;
         Energy offering = new Energy(producer.getEnergyType(), producer.getEnergyProduction(), producer.getEnergyPrice(), "", "");
         message.setContent(EnergySerialization.serializeToJson(offering));
+        System.out.println(myAgent.getLocalName() + " is offering " + offering.toString());
         // Send the message
         this.myAgent.send(message);
     }

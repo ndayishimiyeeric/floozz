@@ -57,16 +57,16 @@ public class Weather extends Agent {
                 int windIntensity = rand.nextInt(101);
                 ((Weather)this.myAgent).weather =  new int[]{sunIntensity, windIntensity};
 
-                System. out.println("New weather: [sun, wind] == " + Arrays.toString(((Weather) this.myAgent).weather));
+                System. out.println("New weather: [sunIntensity, windForce] == " + Arrays.toString(((Weather) this.myAgent).weather));
             }
 
             private void showNewDayBanner() {
+                System.out.println();
                 String bannerTopBottom = "+----------------+";
                 String bannerMiddle = String.format("|      DAY %-5d |", Weather.DAY_COUNTER);
                 System.out.println(bannerTopBottom);
                 System.out.println(bannerMiddle);
                 System.out.println(bannerTopBottom);
-                System.out.println();
             }
         });
 

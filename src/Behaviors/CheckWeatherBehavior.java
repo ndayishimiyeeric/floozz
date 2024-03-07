@@ -38,7 +38,6 @@ public class CheckWeatherBehavior extends TickerBehaviour {
             fe.printStackTrace();
         }
 
-        System.out.println("I got the weather agent"+ this.weatherAgentAID);
         return null;
     }
 
@@ -64,7 +63,6 @@ public class CheckWeatherBehavior extends TickerBehaviour {
                         numbers[0] = Integer.parseInt(parts[0]);
                         numbers[1] = Integer.parseInt(parts[1]);
                         ((Producer)myAgent).setWeatherParams(numbers);
-                        System.out.println("Producer " + myAgent.getLocalName() + " got " + content + " from weather agent.");
                     }
                     else {
                         System.out.println("I received a message but not from weather agent");
