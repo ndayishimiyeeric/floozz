@@ -38,13 +38,13 @@ public class Launcher {
             weatherAgent.start();
             // Generating the producers
             Random random = new Random();
-            int numProducers = 1+random.nextInt(9);
+            int numProducers = 1+random.nextInt(10);
             for (int i = 0; i < numProducers; i++) {
                 int energyType =  random.nextInt(3);
-                int energyProductionCapacity =  1+random.nextInt(9);
+                int energyProductionCapacity =  1+random.nextInt(10);
                 int energyPrice =  3+random.nextInt(2);
                 AgentController producer = mainContainer.createNewAgent("Producer"+i, "Agents.Producer", new Object[]{energyType, energyProductionCapacity, energyPrice});
-                 producer.start();
+                producer.start();
             }
             // Generating the  consumers
             int numConsumers = 1+random.nextInt(999);

@@ -45,6 +45,11 @@ public class HandleBooking extends CyclicBehaviour {
                     System.out.println(energyMap);
                     System.out.println("Received");
                     System.out.println(energyMap.size());
+                    //System.out.println("666" + content);
+//                    Map<AID, Energy> energyMap = EnergyDeserialization.deserializeMapEnergyFromJson(content);
+//                    Energy energyMap = EnergyDeserialization.deserializeMapEnergyFromJson(content);
+//                    System.out.println(energyMap);
+//                    System.out.println("Received");
 //                    for(Map.Entry<AID, Energy> entry: energyMap.entrySet()){
 //                        AID key = entry.getKey();
 //                        Energy energy = entry.getValue();
