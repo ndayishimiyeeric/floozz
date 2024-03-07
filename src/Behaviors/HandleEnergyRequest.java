@@ -63,7 +63,7 @@ public class HandleEnergyRequest extends CyclicBehaviour {
                     AID aid = new AID("123");
                     Energy energy = new Energy(1, 22, 222, "sunny", "night");
                     Map energyHashMap = new HashMap<AID, Energy>();
-                    energyHashMap.put(sender, energy);
+                    energyHashMap.put(aid, energy);
                     newMessage.setOntology("AvailableEnergy");
                     String jsonObject = EnergySerialization.serializeToJson(energyHashMap);
                     newMessage.setContent(jsonObject);

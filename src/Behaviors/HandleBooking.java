@@ -40,10 +40,11 @@ public class HandleBooking extends CyclicBehaviour {
             switch (message.getPerformative()){
                 case ACLMessage.INFORM:
                     System.out.println("666" + content);
+                    String ontology = message.getOntology();
                     Map<AID, Energy> energyMap = EnergyDeserialization.deserializeMapEnergyFromJson(content);
                     System.out.println(energyMap);
                     System.out.println("Received");
-                    for(Map.Entry<AID, Energy> entry: energyMap.entrySet()){
+                    for (Map.Entry<AID, Energy> entry : energyMap.entrySet()) {
                         AID key = entry.getKey();
                         Energy energy = entry.getValue();
                         String energyString = EnergySerialization.serializeToJson(energy);

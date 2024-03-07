@@ -26,6 +26,7 @@ public class Consumer extends Agent {
     private List<EnergyNeed> flexibleNeeds;
     private int preferredEnergyType = 1;
     private double budget = 20;
+    private int sendingTime = 20;
 
     private final MailBox mailBox;
     private final MailBox bookingBox;
