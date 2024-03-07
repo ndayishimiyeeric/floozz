@@ -49,9 +49,7 @@ public class EnergyTable {
 
         for (Map.Entry<AID, Energy> entry : storage.entrySet()) {
             Energy energy = entry.getValue();
-            if (energy.getType() == type) {
-                result.add(energy);
-            }
+            result.add(energy);
         }
 
         return result;
