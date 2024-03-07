@@ -47,7 +47,7 @@ public class CheckWeatherBehavior extends TickerBehaviour {
         req.addReceiver(weatherAgentAID);
         req.setContent("");
         myAgent.send(req);
-        myAgent.addBehaviour(new CyclicBehaviour(myAgent) {
+        myAgent.addBehaviour(new CyclicBehaviour(myAgent) { 
 
             @Override
             public void action() {

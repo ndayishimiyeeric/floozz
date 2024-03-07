@@ -23,7 +23,7 @@ public class RegisterWithManager extends TickerBehaviour {
         // Add the receiver (NetworkManager agent)
         AID receiver = new AID("NetworkManager", AID.ISLOCALNAME);
         message.addReceiver(receiver);
-        Producer producer = (Producer)this.myAgent;
+        Producer producer = (Producer) this.myAgent;
         Energy offering = new Energy(producer.getEnergyType(), producer.getEnergyProduction(), producer.getEnergyPrice(), "", "");
         message.setContent(EnergySerialization.serializeToJson(offering));
         // Send the message
