@@ -11,6 +11,7 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,16 +41,17 @@ public class HandleBooking extends CyclicBehaviour {
             switch (message.getPerformative()){
                 case ACLMessage.INFORM:
                     System.out.println("666" + content);
-                    Map<AID, Energy> energyMap = EnergyDeserialization.deserializeMapEnergyFromJson(content);
+                    List<Energy> energyMap = EnergyDeserialization.deserializeListEnergyFromJson(content);
                     System.out.println(energyMap);
                     System.out.println("Received");
-                    for(Map.Entry<AID, Energy> entry: energyMap.entrySet()){
-                        AID key = entry.getKey();
-                        Energy energy = entry.getValue();
-                        String energyString = EnergySerialization.serializeToJson(energy);
-                        boolean acceptOffer = consumer.evaluateOffer(energyString);
-                        System.out.println(acceptOffer);
-                    }
+                    System.out.println(energyMap.size());
+//                    for(Map.Entry<AID, Energy> entry: energyMap.entrySet()){
+//                        AID key = entry.getKey();
+//                        Energy energy = entry.getValue();
+//                        String energyString = EnergySerialization.serializeToJson(energy);
+//                        boolean acceptOffer = consumer.evaluateOffer(energyString);
+//                        System.out.println(acceptOffer);
+//                    }
 //                    boolean acceptOffer = consumer.evaluateOffer(content);
 //                    if(acceptOffer){
 //                        newMessage.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
