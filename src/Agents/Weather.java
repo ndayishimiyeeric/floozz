@@ -51,10 +51,10 @@ public class Weather extends Agent {
                 showNewDayBanner();
                 Weather.DAY_COUNTER++;
                 Random rand = new Random();
-                // Generates a random integer between 0 and 100
-                int sunIntensity = rand.nextInt(101);
-                // Generates a random integer between 0 and 100
-                int windIntensity = rand.nextInt(101);
+                // Generates a random integer between 1 and 100
+                int sunIntensity = 1+rand.nextInt(100);
+                // Generates a random integer between 1 and 100
+                int windIntensity = 1+rand.nextInt(100);
                 ((Weather)this.myAgent).weather =  new int[]{sunIntensity, windIntensity};
 
                 System. out.println("New weather: [sunIntensity, windForce] == " + Arrays.toString(((Weather) this.myAgent).weather));

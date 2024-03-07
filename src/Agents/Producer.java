@@ -62,6 +62,9 @@ public class Producer extends Agent {
     }
 
     public int[] getWeatherParams() {
+        if (this.weatherParams == null) {
+            return new int[]{-1, -1};
+        }
         return weatherParams;
     }
 

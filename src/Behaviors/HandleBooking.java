@@ -6,11 +6,10 @@ import Utils.Energy;
 import Utils.EnergyDeserialization;
 import Utils.EnergySerialization;
 import Utils.MailBox;
-import jade.content.onto.Ontology;
 import jade.core.AID;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,20 +39,18 @@ public class HandleBooking extends CyclicBehaviour {
             ACLMessage newMessage = new ACLMessage();
             switch (message.getPerformative()){
                 case ACLMessage.INFORM:
-                    System.out.println("666" + content);
-                    String ontology = message.getOntology();
-                    if(ontology.equals("")) {
-                        Map<AID, Energy> energyMap = EnergyDeserialization.deserializeMapEnergyFromJson(content);
-                        System.out.println(energyMap);
-                        System.out.println("Received");
-                        for (Map.Entry<AID, Energy> entry : energyMap.entrySet()) {
-                            AID key = entry.getKey();
-                            Energy energy = entry.getValue();
-                            String energyString = EnergySerialization.serializeToJson(energy);
-                            boolean acceptOffer = consumer.evaluateOffer(energyString);
-                            System.out.println(acceptOffer);
-                        }
-                    }
+                    //System.out.println("666" + content);
+//                    Map<AID, Energy> energyMap = EnergyDeserialization.deserializeMapEnergyFromJson(content);
+//                    Energy energyMap = EnergyDeserialization.deserializeMapEnergyFromJson(content);
+//                    System.out.println(energyMap);
+//                    System.out.println("Received");
+//                    for(Map.Entry<AID, Energy> entry: energyMap.entrySet()){
+//                        AID key = entry.getKey();
+//                        Energy energy = entry.getValue();
+//                        String energyString = EnergySerialization.serializeToJson(energy);
+//                        boolean acceptOffer = consumer.evaluateOffer(energyString);
+//                        System.out.println(acceptOffer);
+//                    }
 //                    boolean acceptOffer = consumer.evaluateOffer(content);
 //                    if(acceptOffer){
 //                        newMessage.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
