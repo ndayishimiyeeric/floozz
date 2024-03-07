@@ -35,9 +35,6 @@ public class ReceiveMessageForConsumer extends CyclicBehaviour {
             String content = message.getContent();
             System.out.println(myAgent.getAID().getName() + "Received message: " + content + " Ontology is " + message.getOntology());
             switch (message.getOntology()){
-//                case "BookingOffer":
-//                    bookingBox.receiveMessage(message);
-//                    break;
                 case "NoAvailableEnergy":
                     bookingBox.receiveMessage(message);
                     break;

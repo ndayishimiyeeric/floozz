@@ -25,7 +25,8 @@ public class Consumer extends Agent {
     private List<EnergyNeed> persistentNeeds;
     private List<EnergyNeed> flexibleNeeds;
     private int preferredEnergyType = 1;
-    private double budget = 20;
+    private double budget;
+    private int sendingTime = 20;
 
     private final MailBox mailBox;
     private final MailBox bookingBox;
@@ -49,7 +50,7 @@ public class Consumer extends Agent {
         });
 
 
-        addBehaviour(new EnergyRequest(this));
+        addBehaviour(new EnergyRequest(this, 10000));
         addBehaviour(new ReceiveMessageForConsumer(this));
         addBehaviour(new HandleBooking(this));
         // respondToBookingOffer
@@ -114,6 +115,10 @@ public class Consumer extends Agent {
         return String.format("%02d:%02d", hour, minute);
     }
 
+    public double getBudget() {
+        return this.budget;
+    }
+
     private void requestForBooking(String marketAgent, String time, double amount, double price) {
         ACLMessage bookingRequest = new ACLMessage(ACLMessage.CFP);
         bookingRequest.addReceiver(new jade.core.AID(marketAgent, AID.ISLOCALNAME));
@@ -136,8 +141,21 @@ public class Consumer extends Agent {
         return utilityScore;
     }
 
-    public boolean evaluateOffer(String content) {
-        Energy energy = EnergyDeserialization.deserializeFromJson(content);
+//    public boolean evaluateOffer(String content) {
+//        Energy energy = EnergyDeserialization.deserializeFromJson(content);
+//        int type = energy.getType();
+//        double price = energy.getPrice();
+//        double quantity = energy.getQuantity();
+//
+//        double utility = utilityForOffer(type, price, quantity);
+//
+//        boolean isWithinBudget = price <= budget;
+//        boolean hasHighUtility = utility > 50;
+//
+//        return isWithinBudget && hasHighUtility;
+//    }
+
+    public boolean evaluateOffer(Energy energy) {
         int type = energy.getType();
         double price = energy.getPrice();
         double quantity = energy.getQuantity();

@@ -2,7 +2,9 @@ package Utils;
 
 import jade.core.AID;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class EnergyTable {
@@ -39,6 +41,17 @@ public class EnergyTable {
                 result.put(entry.getKey(), energy);
             }
         }
+        return result;
+    }
+
+    public List<Energy> getEnergyList(int type) {
+        List<Energy> result = new ArrayList<>();
+
+        for (Map.Entry<AID, Energy> entry : storage.entrySet()) {
+            Energy energy = entry.getValue();
+            result.add(energy);
+        }
+
         return result;
     }
 }

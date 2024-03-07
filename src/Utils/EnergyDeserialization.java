@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import jade.core.AID;
 
 import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Map;
 
 public class EnergyDeserialization {
@@ -15,9 +16,13 @@ public class EnergyDeserialization {
 
     public static Map<AID, Energy> deserializeMapEnergyFromJson(String jsonString) {
         Gson gson = new Gson();
-        Type type = new TypeToken<Map<AID, Energy>>(){}.getType();
-        System.out.println("jasontring " + jsonString);
+        Type type = new TypeToken<Map<String, Energy>>(){}.getType();
+        return gson.fromJson(jsonString, type);
+    }
 
+    public static List<Energy> deserializeListEnergyFromJson(String jsonString) {
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Energy>>(){}.getType();
         return gson.fromJson(jsonString, type);
     }
 }
