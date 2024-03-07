@@ -25,7 +25,7 @@ public class Consumer extends Agent {
     private List<EnergyNeed> persistentNeeds;
     private List<EnergyNeed> flexibleNeeds;
     private int preferredEnergyType = 1;
-    private double budget = 20;
+    private double budget;
     private int sendingTime = 20;
 
     private final MailBox mailBox;
@@ -113,6 +113,10 @@ public class Consumer extends Agent {
         int hour = random.nextInt(24);
         int minute = random.nextInt(2) * 30;
         return String.format("%02d:%02d", hour, minute);
+    }
+
+    public double getBudget() {
+        return this.budget;
     }
 
     private void requestForBooking(String marketAgent, String time, double amount, double price) {
