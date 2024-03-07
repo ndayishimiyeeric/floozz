@@ -11,9 +11,7 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author LIN Tianyuan
@@ -42,41 +40,31 @@ public class HandleBooking extends TickerBehaviour {
             switch (message.getPerformative()) {
                 case ACLMessage.INFORM:
                     if (message.getOntology().equals("AvailableEnergy")) {
-                        System.out.println("666" + content);
                         List<Energy> energyList = EnergyDeserialization.deserializeListEnergyFromJson(content);
-                        System.out.println(energyList);
-                        System.out.println("Received");
-                        System.out.println(energyList.size());
+                        for(int i = 0; i < energyList.size(); i++) {
+                            boolean acceptOffer = consumer.evaluateOffer(energyList.get(i));
+                            if (acceptOffer) {
+                                String acceptedEnergy = "Accepted Energy: " + energyList.get(i);
+                                System.out.println(acceptedEnergy);
+                                newMessage.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
+                                newMessage.setOntology("ProposalAccepted");
+                                newMessage.setContent(acceptedEnergy);
+                                newMessage.addReceiver(sender);
+                                bookingBox.messages.poll();
+                            } else {
+                                String rejectedEnergy = "Rejected Energy: " + energyList.get(i);
+                                System.out.println(rejectedEnergy);
+                                newMessage.setPerformative(ACLMessage.REJECT_PROPOSAL);
+                                newMessage.setOntology("ProposalRejected");
+                                newMessage.setContent("Rejected");
+                                newMessage.addReceiver(sender);
+                                bookingBox.messages.poll();
+                            }
+                        }
                     } else if (message.getOntology().equals("NoAvailableEnergy")) {
-                        System.out.println(consumer.getAID()+content);
+                        System.out.println(consumer.getAID()+ " Reply: " + content);
                     }
 
-//                    System.out.println("666" + content);
-//                    Map<AID, Energy> energyMap = EnergyDeserialization.deserializeMapEnergyFromJson(content);
-//                    Energy energyMap = EnergyDeserialization.deserializeMapEnergyFromJson(content);
-//                    System.out.println(energyMap);
-//                    System.out.println("Received");
-//                    for (Map.Entry<AID, Energy> entry : energyMap.entrySet()) {
-//                        AID key = entry.getKey();
-//                        Energy energy = entry.getValue();
-//                        String energyString = EnergySerialization.serializeToJson(energy);
-//                        boolean acceptOffer = consumer.evaluateOffer(energyString);
-//                        System.out.println(acceptOffer);
-//                    }
-//                    boolean acceptOffer = consumer.evaluateOffer(content);
-//                    if (acceptOffer) {
-//                        newMessage.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
-//                        newMessage.setOntology("ProposalAccepted");
-//                        newMessage.setContent("Accepted");
-//                        newMessage.addReceiver(sender);
-//                        bookingBox.messages.poll();
-//                    } else {
-//                        newMessage.setPerformative(ACLMessage.REJECT_PROPOSAL);
-//                        newMessage.setOntology("ProposalRejected");
-//                        newMessage.setContent("Rejected");
-//                        newMessage.addReceiver(sender);
-//                        bookingBox.messages.poll();
-//                    }
                     consumer.send(newMessage);
                     break;
                 case ACLMessage.REQUEST:

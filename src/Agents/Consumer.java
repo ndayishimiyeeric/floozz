@@ -137,8 +137,21 @@ public class Consumer extends Agent {
         return utilityScore;
     }
 
-    public boolean evaluateOffer(String content) {
-        Energy energy = EnergyDeserialization.deserializeFromJson(content);
+//    public boolean evaluateOffer(String content) {
+//        Energy energy = EnergyDeserialization.deserializeFromJson(content);
+//        int type = energy.getType();
+//        double price = energy.getPrice();
+//        double quantity = energy.getQuantity();
+//
+//        double utility = utilityForOffer(type, price, quantity);
+//
+//        boolean isWithinBudget = price <= budget;
+//        boolean hasHighUtility = utility > 50;
+//
+//        return isWithinBudget && hasHighUtility;
+//    }
+
+    public boolean evaluateOffer(Energy energy) {
         int type = energy.getType();
         double price = energy.getPrice();
         double quantity = energy.getQuantity();
