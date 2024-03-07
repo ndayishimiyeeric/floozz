@@ -1,5 +1,6 @@
 package Agents;
 
+import Utils.FancyPrint;
 import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
 import jade.core.behaviours.CyclicBehaviour;
@@ -56,17 +57,16 @@ public class Weather extends Agent {
                 // Generates a random integer between 1 and 100
                 int windIntensity = 1+rand.nextInt(100);
                 ((Weather)this.myAgent).weather =  new int[]{sunIntensity, windIntensity};
-
-                System. out.println("New weather: [sunIntensity, windForce] == " + Arrays.toString(((Weather) this.myAgent).weather));
+                FancyPrint.white_fore__print("New weather: [sunIntensity, windForce] == " + Arrays.toString(((Weather) this.myAgent).weather), true);
             }
 
             private void showNewDayBanner() {
                 System.out.println();
                 String bannerTopBottom = "+----------------+";
                 String bannerMiddle = String.format("|      DAY %-5d |", Weather.DAY_COUNTER);
-                System.out.println(bannerTopBottom);
-                System.out.println(bannerMiddle);
-                System.out.println(bannerTopBottom);
+                FancyPrint.green_fore__print(bannerTopBottom, true);
+                FancyPrint.green_fore__print(bannerMiddle, true);
+                FancyPrint.green_fore__print(bannerTopBottom, true);
             }
         });
 

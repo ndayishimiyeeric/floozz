@@ -52,7 +52,7 @@ public class Producer extends Agent {
         if(this.weatherParams == null) {
             return energyProductionCapacity*80;
         }
-        int intensity = 0;
+        int intensity;
         if (energyType == 1) {
             intensity = this.weatherParams[0];
         } else {
