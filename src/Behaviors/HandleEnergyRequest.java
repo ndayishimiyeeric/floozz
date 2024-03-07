@@ -9,6 +9,7 @@ import jade.core.AID;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class HandleEnergyRequest extends CyclicBehaviour {
@@ -58,14 +59,22 @@ public class HandleEnergyRequest extends CyclicBehaviour {
 
                     int type = (int) content.charAt(0);
                     Map<AID, Energy> available = availableServicesTable.getEnergy(type);
-                    if (available.size() > 1) {
-                        newMessage.setOntology("AvailableEnergy");
-                        String jsonObject = EnergySerialization.serializeToJson(available);
-                        newMessage.setContent(jsonObject);
-                    } else {
-                        newMessage.setOntology("NoAvailableEnergy");
-                        newMessage.setContent("No energy at this time");
-                    }
+                    // Change this
+                    AID aid = new AID("123");
+                    Energy energy = new Energy(1, 22, 222, "sunny", "night");
+                    Map energyHashMap = new HashMap<AID, Energy>();
+                    energyHashMap.put(sender, energy);
+                    newMessage.setOntology("AvailableEnergy");
+                    String jsonObject = EnergySerialization.serializeToJson(energyHashMap);
+                    newMessage.setContent(jsonObject);
+//                    if (available.size() > 1) {
+//                        newMessage.setOntology("AvailableEnergy");
+//                        String jsonObject = EnergySerialization.serializeToJson(available);
+//                        newMessage.setContent(jsonObject);
+//                    } else {
+//                        newMessage.setOntology("NoAvailableEnergy");
+//                        newMessage.setContent("No energy at this time");
+//                    }
 
                     newMessage.setPerformative(ACLMessage.INFORM);
                     newMessage.addReplyTo(sender);

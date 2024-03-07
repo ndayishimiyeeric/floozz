@@ -1,5 +1,6 @@
 package Behaviors;
 
+import Agents.Consumer;
 import Agents.NetworkManager;
 import Utils.MailBox;
 import jade.core.behaviours.CyclicBehaviour;
