@@ -50,7 +50,7 @@ public class Consumer extends Agent {
         });
 
 
-        addBehaviour(new EnergyRequest(this));
+        addBehaviour(new EnergyRequest(this, 10000));
         addBehaviour(new ReceiveMessageForConsumer(this));
         addBehaviour(new HandleBooking(this));
         // respondToBookingOffer
