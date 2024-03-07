@@ -16,6 +16,7 @@ import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -36,11 +37,13 @@ public class Consumer extends Agent {
         this.mailBox = new MailBox(this.getAID());
         this.bookingBox = new MailBox(this.getAID());
         this.requestEnergyBox = new MailBox(this.getAID());
+        this.persistentNeeds = new ArrayList<>();
+        this.flexibleNeeds = new ArrayList<>();
     }
 
 
     protected void setup() {
-        addBehaviour(new TickerBehaviour(this, 86400000) {
+        addBehaviour(new TickerBehaviour(this, Weather.ABSTRACT_DAY_LENGTH) {
             @Override
             protected void onTick() {
                 generateFlexibleNeeds();
@@ -50,7 +53,7 @@ public class Consumer extends Agent {
         });
 
 
-        addBehaviour(new EnergyRequest(this, 10000));
+        addBehaviour(new EnergyRequest(this,  Weather.ABSTRACT_DAY_LENGTH));
         addBehaviour(new ReceiveMessageForConsumer(this));
         addBehaviour(new HandleBooking(this));
         // respondToBookingOffer
