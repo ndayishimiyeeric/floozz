@@ -21,7 +21,7 @@ public class ReceiveTempMessage extends CyclicBehaviour {
 
         if (message != null) {
             String content = message.getContent();
-            System.out.println(myAgent.getAID().getName() + "Received message: " + content + " Ontology is " + message.getOntology());
+            // System.out.println(myAgent.getAID().getName() + "Received message: " + content + " Ontology is " + message.getOntology());
         }
     }
 }

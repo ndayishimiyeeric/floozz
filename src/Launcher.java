@@ -47,7 +47,7 @@ public class Launcher {
                 producer.start();
             }
             // Generating the  consumers
-            int numConsumers = 10+random.nextInt(990);
+            int numConsumers = 10+random.nextInt(99);
             for (int i = 0; i < numConsumers; i++) {
                 AgentController consumer = mainContainer.createNewAgent("Consumer-"+i, "Agents.Consumer", null);
                 consumer.start();

@@ -40,7 +40,6 @@ public class HandleEnergyRequest extends CyclicBehaviour {
                     newMessage.addReceiver(sender);
                     networkManager.send(newMessage);
                     requestsMailBox.messages.poll();
-                    System.out.println(networkManager.getAID().getName() + " Reply: " + newMessage.getContent());
                     break;
                 case ACLMessage.INFORM:
                     if (content.isEmpty()) {
@@ -52,27 +51,19 @@ public class HandleEnergyRequest extends CyclicBehaviour {
                         newMessage.addReceiver(sender);
                         networkManager.send(newMessage);
                         requestsMailBox.messages.poll();
-                        System.out.println(networkManager.getAID() + " Reply: " + newMessage.getContent());
                         return;
                     }
 
                     int type = (int) content.charAt(0);
                     List<Energy> available = availableServicesTable.getEnergyList(type);
-                    Energy energy = new Energy(1, 22, 222, "sunny", "night");
-                    Energy energy2 = new Energy(2, 33, 333, "sunny", "night");
-                    available.add(energy);
-                    available.add(energy2);
-                    newMessage.setOntology("AvailableEnergy");
-                    String jsonObject = EnergySerialization.serializeToJsonList(available);
-                    newMessage.setContent(jsonObject);
-//                    if (available.size() > 0) {
-//                        newMessage.setOntology("AvailableEnergy");
-//                        String jsonObject = EnergySerialization.serializeToJsonList(available);
-//                        newMessage.setContent(jsonObject);
-//                    } else {
-//                        newMessage.setOntology("NoAvailableEnergy");
-//                        newMessage.setContent("No energy at this time");
-//                    }
+                    if (!available.isEmpty()) {
+                        newMessage.setOntology("AvailableEnergy");
+                        String jsonObject = EnergySerialization.serializeToJsonList(available);
+                        newMessage.setContent(jsonObject);
+                    } else {
+                        newMessage.setOntology("NoAvailableEnergy");
+                        newMessage.setContent("No energy at this time");
+                    }
 
                     newMessage.setPerformative(ACLMessage.INFORM);
                     newMessage.addReplyTo(sender);

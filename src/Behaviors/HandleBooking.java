@@ -43,10 +43,8 @@ public class HandleBooking extends TickerBehaviour {
                         List<Energy> energyList = EnergyDeserialization.deserializeListEnergyFromJson(content);
                         for(int i = 0; i < energyList.size(); i++) {
                             boolean acceptOffer = consumer.evaluateOffer(energyList.get(i));
-                            System.out.println(consumer.getBudget());
                             if (acceptOffer) {
                                 String acceptedEnergy = "Accepted Energy: " + energyList.get(i);
-                                System.out.println(acceptedEnergy);
                                 newMessage.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
                                 newMessage.setOntology("EnergyServiceBooking");
                                 newMessage.setContent(acceptedEnergy);
@@ -54,7 +52,6 @@ public class HandleBooking extends TickerBehaviour {
                                 bookingBox.messages.poll();
                             } else {
                                 String rejectedEnergy = "Rejected Energy: " + energyList.get(i);
-                                System.out.println(rejectedEnergy);
                                 newMessage.setPerformative(ACLMessage.REJECT_PROPOSAL);
                                 newMessage.setOntology("ProposalRejected");
                                 newMessage.setContent("Rejected");

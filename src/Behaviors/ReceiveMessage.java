@@ -32,7 +32,7 @@ public class ReceiveMessage extends CyclicBehaviour {
         if (message != null) {
             // message processing
             String content = message.getContent();
-            System.out.println(myAgent.getAID().getName() + "Received message: " + content + " Ontology is " + message.getOntology());
+            // System.out.println(myAgent.getAID().getName() + "Received message: " + content + " Ontology is " + message.getOntology());
             // Route the message based on its ontology
             switch (message.getOntology()) {
                 case "TimerTimeOfDay":

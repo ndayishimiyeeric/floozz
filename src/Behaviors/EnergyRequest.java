@@ -41,7 +41,6 @@ public class EnergyRequest extends TickerBehaviour {
             AID receiver = new AID("NetWorkManager", AID.ISLOCALNAME);
             message.addReceiver(receiver);
             consumer.send(message);
-            System.out.println("Message sent.");
         }else{
             block();
         }
