@@ -8,7 +8,7 @@ The project involves creating a multi-agent system (MAS) using the JADE framewor
 
 1. **Producer Agents**: Responsible for generating energy and advertising their production capabilities and prices to the marketplace.
 2. **Consumer Agents**: Seek to purchase energy, evaluating options in the marketplace, and making booking requests based on their needs and the prices offered.
-3. **EnergyManager Agent (Market)**: Acts as a mediator between producers and consumers, managing advertisements from producers and purchase requests from consumers to facilitate energy transactions.
+3. **NetworkManager Agent (Market)**: Acts as a mediator between producers and consumers, managing advertisements from producers and purchase requests from consumers to facilitate energy transactions.
 
 The goal is to efficiently  distribute energy from producers to consumers through the marketplace, optimizing for various factors such as price, demand, and supply.
 
