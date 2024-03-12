@@ -3,6 +3,7 @@ package Agents;
 import Behaviors.HandleEnergyRequest;
 import Behaviors.HandleRegistrationService;
 import Behaviors.ReceiveMessage;
+import Behaviors.ResetEnergyTable;
 import Utils.EnergyTable;
 import Utils.MailBox;
 import jade.core.Agent;
@@ -56,6 +57,7 @@ public class NetworkManager extends Agent {
         addBehaviour(new ReceiveMessage(this)); // March 2 23 // 00:00 latest
         addBehaviour(new HandleRegistrationService(this));
         addBehaviour(new HandleEnergyRequest(this));
+        addBehaviour(new ResetEnergyTable(this, 8400));
     }
 
 }

@@ -54,4 +54,8 @@ public class EnergyTable {
 
         return result;
     }
+
+    public int getSize() {
+        return storage.size();
+    }
 }

@@ -53,33 +53,9 @@ public class Consumer extends Agent {
         });
 
 
-        addBehaviour(new EnergyRequest(this,  Weather.ABSTRACT_DAY_LENGTH));
+        addBehaviour(new EnergyRequest(this,  8200));
         addBehaviour(new ReceiveMessageForConsumer(this));
         addBehaviour(new HandleBooking(this));
-        // respondToBookingOffer
-//        addBehaviour(new CyclicBehaviour(this) {
-//            @Override
-//            public void action() {
-//                ACLMessage offerMsg = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.PROPOSE));
-//                if (offerMsg != null) {
-//                    String content = offerMsg.getContent();
-//                    System.out.println(content);
-//                    boolean acceptOffer = evaluateOffer(content);
-//                    ACLMessage reply = offerMsg.createReply();
-//
-//                    if (acceptOffer){
-//                        reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
-//                        reply.setContent("Accepted");
-//                    } else {
-//                        reply.setPerformative(ACLMessage.REJECT_PROPOSAL);
-//                        reply.setContent("Rejected");
-//                    }
-//                    send(reply);
-//                } else {
-//                    block();
-//                }
-//            }
-//        });
 
     }
 
@@ -143,20 +119,6 @@ public class Consumer extends Agent {
 
         return utilityScore;
     }
-
-//    public boolean evaluateOffer(String content) {
-//        Energy energy = EnergyDeserialization.deserializeFromJson(content);
-//        int type = energy.getType();
-//        double price = energy.getPrice();
-//        double quantity = energy.getQuantity();
-//
-//        double utility = utilityForOffer(type, price, quantity);
-//
-//        boolean isWithinBudget = price <= budget;
-//        boolean hasHighUtility = utility > 50;
-//
-//        return isWithinBudget && hasHighUtility;
-//    }
 
     public boolean evaluateOffer(Energy energy) {
         int type = energy.getType();

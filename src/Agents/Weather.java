@@ -21,7 +21,7 @@ public class Weather extends Agent {
 
     // The length in milliseconds that counts
     // as a full day
-    public static final int ABSTRACT_DAY_LENGTH = 6000;
+    public static final int ABSTRACT_DAY_LENGTH = 8000;
 
     private static int DAY_COUNTER;
 
@@ -46,7 +46,7 @@ public class Weather extends Agent {
         }
 
         // Renew weather
-        addBehaviour(new TickerBehaviour(this, 6000) {
+        addBehaviour(new TickerBehaviour(this, ABSTRACT_DAY_LENGTH) {
             @Override
             protected void onTick() {
                 showNewDayBanner();

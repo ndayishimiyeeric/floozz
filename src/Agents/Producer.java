@@ -27,8 +27,8 @@ public class Producer extends Agent {
             energyProductionCapacity = Integer.parseInt(""+args[1]);
             energyPrice = Integer.parseInt(""+args[2]);
         }
-        addBehaviour(new RegisterWithManager(this, Weather.ABSTRACT_DAY_LENGTH));
-        addBehaviour(new GenerateDailyEnergyOffering(this, Weather.ABSTRACT_DAY_LENGTH));
+        addBehaviour(new RegisterWithManager(this, 8100));
+        addBehaviour(new GenerateDailyEnergyOffering(this, 8100));
         addBehaviour(new RespondToRequestBehavior(this));
         // If renewable energy, then we check weather regularly
         if (this.energyType != 0) {
